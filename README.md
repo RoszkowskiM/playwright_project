@@ -21,7 +21,7 @@ if link is broken check https://jaktestowac.pl/lesson/pw1s01l01/
 `npx playwright show-report`
 - cancelling Node process  
 hit twice <kbd>Ctrl</kbd> + <kbd>C</kbd>
-- make a copy of current line below
+- make a copy of current line below  
 Alt + Shift + arrow down
 
 ## Playwright Config modifications

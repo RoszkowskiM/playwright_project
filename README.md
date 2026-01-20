@@ -1,62 +1,65 @@
 # Test Automation training from jaktestowac.pl
 
 ## Links
+
 - course https://jaktestowac.pl/course/playwright-wprowadzenie/
 - test site https://demo-bank.vercel.app/  
-if link is broken check https://jaktestowac.pl/lesson/pw1s01l01/
+  if link is broken check https://jaktestowac.pl/lesson/pw1s01l01/
 - code repository https://github.com/jaktestowac/playwright_automatyzacja_wprowadzenie
 
 ## Commands
+
 - check `NodeJS` version  
-`node -v`
+  `node -v`
 - new project with Playwright  
-`npm init playwright@latest`
+  `npm init playwright@latest`
 - record tests for given site  
-`npx playwright codegen https://demo-bank.vercel.app/`
+  `npx playwright codegen https://demo-bank.vercel.app/`
 - run tests without browser GUI  
-`npx playwright test`
+  `npx playwright test`
 - run tests with browser GUI  
-`npx playwright test --headed`
+  `npx playwright test --headed`
 - view report  
-`npx playwright show-report`
+  `npx playwright show-report`
 - cancelling Node process  
-hit twice <kbd>Ctrl</kbd> + <kbd>C</kbd>
+  hit twice <kbd>Ctrl</kbd> + <kbd>C</kbd>
 - make a copy of current line below  
-Alt + Shift + arrow down
+  Alt + Shift + arrow down
 - refactor - auto-create new variable based on selected text  
-Ctrl + Shift + R / Right Mouse Button -> Refactor
+  Ctrl + Shift + R / Right Mouse Button -> Refactor
 - Move line up/down  
-Alt + arrow up/down
+  Alt + arrow up/down
 
 ## Playwright Config modifications
+
 - config file `playwright.config.ts`
-- disable browsers, i.e. Firefox  
-    ```javascript
-    // {
-    //   name: 'firefox',
-    //   use: {
-    //     ...devices['Desktop Firefox'],
-    //   },
-    // },
-    ```
+- disable browsers, i.e. Firefox
+  ```javascript
+  // {
+  //   name: 'firefox',
+  //   use: {
+  //     ...devices['Desktop Firefox'],
+  //   },
+  // },
+  ```
 
 ## Visual Studio Code
+
 - Preview: for README.md
 - Autosave: in File -> Auto Save
 - Timeline: file context menu -> Open Timeline
 - Formatting: editor -> context menu -> Format Document
 
 ## Playwright snippets
-- test:
-    ```javascript
-    test('test description', async ({ page }) => {
-    
-    });
-    ```
-- describe:
-    ```javascript
-     test.describe('Group description', () => {
 
-     });
-    ```
+- test:
+  ```javascript
+  test('test description', async ({ page }) => {});
+  ```
+- describe:
+
+  ```javascript
+  test.describe('Group description', () => {});
+  ```
+
 - running one test: `test.only`

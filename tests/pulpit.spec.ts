@@ -4,20 +4,31 @@ test.describe('Pulpit tests', () => {
     // test.describe.configure({ retries: 3 }); //traktować jako ostateczność
 
     test('quick payment with correct data', async ({ page }) => {
-        await page.goto('https://demo-bank.vercel.app/');
-        await page.getByTestId('login-input').fill('tester11');
-        await page.getByTestId('password-input').fill('password');
+        // Arrange
+        const url = 'https://demo-bank.vercel.app/';
+        const userID = 'tester11';
+        const userPassword = 'testing!';
+
+        const recieverID = '2';
+        const transferAmount = '150';
+        const transferTitle = 'pizza';
+        const expectedTransferReciever = 'Chuck Demobankowy';
+
+        // Act
+        await page.goto(url);
+        await page.getByTestId('login-input').fill(userID);
+        await page.getByTestId('password-input').fill(userPassword);
         await page.getByTestId('login-button').click();
         await page.waitForLoadState("domcontentloaded");
-        await page.locator('#widget_1_transfer_receiver').selectOption('2');
-        await page.locator('#widget_1_transfer_amount').fill('150');
-        await page.locator('#widget_1_transfer_title').fill('pizza');
+        await page.locator('#widget_1_transfer_receiver').selectOption(recieverID);
+        await page.locator('#widget_1_transfer_amount').fill(transferAmount);
+        await page.locator('#widget_1_transfer_title').fill(transferTitle);
         // await page.getByRole('button', { name: 'wykonaj' }).click();
         await page.locator('#execute_btn').click();
         await page.getByTestId('close-button').click();
-        // await page.getByRole('link', { name: 'Przelew wykonany! Chuck Demobankowy - 150,00PLN - pizza' }).click();
 
-        await expect(page.locator('#show_messages')).toHaveText('Przelew wykonany! Chuck Demobankowy - 150,00PLN - pizza');
+        // Assert
+        await expect(page.locator('#show_messages')).toHaveText(`Przelew wykonany! ${expectedTransferReciever} - ${transferAmount},00PLN - ${transferTitle}`);
     });
 
     test('successful mobile top-up', async ({ page }) => {
@@ -34,8 +45,8 @@ test.describe('Pulpit tests', () => {
 
         await expect(page.locator('#show_messages')).toHaveText('Doładowanie wykonane! 100,00PLN na numer 500 xxx xxx');
         await expect(page.getByTestId('message-text')).toHaveText('Doładowanie wykonane! 100,00PLN na numer 500 xxx xxx');
-});
-
+    });
+    // Moje dupowate próby pisania asercji na dupowatych lokatorach
     // test('menu elements presence', async ({ page }) => {
     //     await page.goto('https://demo-bank.vercel.app/');
     //     await page.getByTestId('login-input').fill('tester11');

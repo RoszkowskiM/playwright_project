@@ -23,6 +23,10 @@ if link is broken check https://jaktestowac.pl/lesson/pw1s01l01/
 hit twice <kbd>Ctrl</kbd> + <kbd>C</kbd>
 - make a copy of current line below  
 Alt + Shift + arrow down
+- refactor - auto-create new variable based on selected text  
+Ctrl + Shift + R / Right Mouse Button -> Refactor
+- Move line up/down  
+Alt + arrow up/down
 
 ## Playwright Config modifications
 - config file `playwright.config.ts`

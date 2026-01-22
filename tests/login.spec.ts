@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('User login to Demobank', () => {
   const url = 'https://demo-bank.vercel.app/';
-  const userID = 'tester11';
+  const userId = 'tester11';
   const userPassword = 'testing!';
 
   test('successful login with correct credentials', async ({ page }) => {
@@ -11,7 +11,7 @@ test.describe('User login to Demobank', () => {
 
     // Act
     await page.goto(url);
-    await page.getByTestId('login-input').fill(userID);
+    await page.getByTestId('login-input').fill(userId);
     await page.getByTestId('password-input').fill(userPassword);
     await page.getByTestId('login-button').click();
 
@@ -21,12 +21,12 @@ test.describe('User login to Demobank', () => {
 
   test('unsuccessful login with too short username', async ({ page }) => {
     // Arrange
-    const invalidUserID = 'tester';
+    const invalidUserId = 'tester';
     const expectedIdLoginErr = 'identyfikator ma min. 8 znaków';
 
     // Act
     await page.goto(url);
-    await page.getByTestId('login-input').fill(invalidUserID);
+    await page.getByTestId('login-input').fill(invalidUserId);
     await page.getByTestId('password-input').click();
 
     // Assert
@@ -42,7 +42,7 @@ test.describe('User login to Demobank', () => {
 
     // Act
     await page.goto(url);
-    await page.getByTestId('login-input').fill(userID);
+    await page.getByTestId('login-input').fill(userId);
     await page.getByTestId('password-input').fill(invalidPassword);
     await page.getByTestId('password-input').blur();
 

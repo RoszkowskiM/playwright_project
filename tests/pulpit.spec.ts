@@ -4,23 +4,24 @@ test.describe('Pulpit tests', () => {
   // test.describe.configure({ retries: 3 }); //traktować jako ostateczność
 
   const url = 'https://demo-bank.vercel.app/';
-  const userID = 'tester11';
+  const userId = 'tester11';
   const userPassword = 'testing!';
 
   test('quick payment with correct data', async ({ page }) => {
     // Arrange
-    const recieverID = '2';
+    const recieverId = '2';
     const transferAmount = '150';
     const transferTitle = 'pizza';
     const expectedTransferReciever = 'Chuck Demobankowy';
+    const expectedMessage = `Przelew wykonany! ${expectedTransferReciever} - ${transferAmount},00PLN - ${transferTitle}`;
 
     // Act
     await page.goto(url);
-    await page.getByTestId('login-input').fill(userID);
+    await page.getByTestId('login-input').fill(userId);
     await page.getByTestId('password-input').fill(userPassword);
     await page.getByTestId('login-button').click();
     await page.waitForLoadState('domcontentloaded');
-    await page.locator('#widget_1_transfer_receiver').selectOption(recieverID);
+    await page.locator('#widget_1_transfer_receiver').selectOption(recieverId);
     await page.locator('#widget_1_transfer_amount').fill(transferAmount);
     await page.locator('#widget_1_transfer_title').fill(transferTitle);
     // await page.getByRole('button', { name: 'wykonaj' }).click();
@@ -28,19 +29,18 @@ test.describe('Pulpit tests', () => {
     await page.getByTestId('close-button').click();
 
     // Assert
-    await expect(page.locator('#show_messages')).toHaveText(
-      `Przelew wykonany! ${expectedTransferReciever} - ${transferAmount},00PLN - ${transferTitle}`,
-    );
+    await expect(page.locator('#show_messages')).toHaveText(expectedMessage);
   });
 
   test('successful mobile top-up', async ({ page }) => {
     // Arrange
     const recieverNumber = '500 xxx xxx';
     const topUpAmount = '100';
+    const expectedMessage = `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${recieverNumber}`;
 
     // Act
     await page.goto(url);
-    await page.getByTestId('login-input').fill(userID);
+    await page.getByTestId('login-input').fill(userId);
     await page.getByTestId('password-input').fill(userPassword);
     await page.getByTestId('login-button').click();
     await page.waitForLoadState('domcontentloaded');
@@ -51,12 +51,8 @@ test.describe('Pulpit tests', () => {
     await page.getByTestId('close-button').click();
 
     // Assert
-    await expect(page.locator('#show_messages')).toHaveText(
-      `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${recieverNumber}`,
-    );
-    await expect(page.getByTestId('message-text')).toHaveText(
-      `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${recieverNumber}`,
-    );
+    await expect(page.locator('#show_messages')).toHaveText(expectedMessage);
+    await expect(page.getByTestId('message-text')).toHaveText(expectedMessage);
   });
   // Moje dupowate próby pisania asercji na dupowatych lokatorach
   // test('menu elements presence', async ({ page }) => {

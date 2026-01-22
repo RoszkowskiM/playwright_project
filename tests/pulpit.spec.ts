@@ -4,10 +4,9 @@ test.describe('Pulpit tests', () => {
   // test.describe.configure({ retries: 3 }); //traktować jako ostateczność
 
   test.beforeEach(async ({ page }) => {
-    const url = 'https://demo-bank.vercel.app/';
     const userId = 'tester11';
     const userPassword = 'testing!';
-    await page.goto(url);
+    await page.goto('/');
     await page.getByTestId('login-input').fill(userId);
     await page.getByTestId('password-input').fill(userPassword);
     await page.getByTestId('login-button').click();

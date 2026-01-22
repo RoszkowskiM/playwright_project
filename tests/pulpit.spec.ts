@@ -3,12 +3,12 @@ import { test, expect } from '@playwright/test';
 test.describe('Pulpit tests', () => {
   // test.describe.configure({ retries: 3 }); //traktować jako ostateczność
 
+  const url = 'https://demo-bank.vercel.app/';
+  const userID = 'tester11';
+  const userPassword = 'testing!';
+
   test('quick payment with correct data', async ({ page }) => {
     // Arrange
-    const url = 'https://demo-bank.vercel.app/';
-    const userID = 'tester11';
-    const userPassword = 'testing!';
-
     const recieverID = '2';
     const transferAmount = '150';
     const transferTitle = 'pizza';
@@ -34,22 +34,28 @@ test.describe('Pulpit tests', () => {
   });
 
   test('successful mobile top-up', async ({ page }) => {
-    await page.goto('https://demo-bank.vercel.app/');
-    await page.getByTestId('login-input').fill('tester11');
-    await page.getByTestId('password-input').fill('password');
+    // Arrange
+    const recieverNumber = '500 xxx xxx';
+    const topUpAmount = '100';
+
+    // Act
+    await page.goto(url);
+    await page.getByTestId('login-input').fill(userID);
+    await page.getByTestId('password-input').fill(userPassword);
     await page.getByTestId('login-button').click();
     await page.waitForLoadState('domcontentloaded');
-    await page.locator('#widget_1_topup_receiver').selectOption('500 xxx xxx');
-    await page.locator('#widget_1_topup_amount').fill('100');
+    await page.locator('#widget_1_topup_receiver').selectOption(recieverNumber);
+    await page.locator('#widget_1_topup_amount').fill(topUpAmount);
     await page.locator('#uniform-widget_1_topup_agreement > span').click();
     await page.getByRole('button', { name: 'doładuj telefon' }).click();
     await page.getByTestId('close-button').click();
 
+    // Assert
     await expect(page.locator('#show_messages')).toHaveText(
-      'Doładowanie wykonane! 100,00PLN na numer 500 xxx xxx',
+      `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${recieverNumber}`,
     );
     await expect(page.getByTestId('message-text')).toHaveText(
-      'Doładowanie wykonane! 100,00PLN na numer 500 xxx xxx',
+      `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${recieverNumber}`,
     );
   });
   // Moje dupowate próby pisania asercji na dupowatych lokatorach

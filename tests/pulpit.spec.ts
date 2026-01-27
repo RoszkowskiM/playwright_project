@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
+import { LoginPage } from '../pages/login.page';
 
 test.describe('Pulpit tests', () => {
   // test.describe.configure({ retries: 3 }); //traktować jako ostateczność
@@ -7,11 +8,12 @@ test.describe('Pulpit tests', () => {
   test.beforeEach(async ({ page }) => {
     const userId = loginData.userId;
     const userPassword = loginData.password;
+    const loginPage = new LoginPage(page);
 
     await page.goto('/');
-    await page.getByTestId('login-input').fill(userId);
-    await page.getByTestId('password-input').fill(userPassword);
-    await page.getByTestId('login-button').click();
+    await loginPage.loginInput.fill(userId);
+    await loginPage.passwordInput.fill(userPassword);
+    await loginPage.loginButton.click();
     await page.waitForLoadState('domcontentloaded');
   });
 
@@ -27,7 +29,6 @@ test.describe('Pulpit tests', () => {
     await page.locator('#widget_1_transfer_receiver').selectOption(recieverId);
     await page.locator('#widget_1_transfer_amount').fill(transferAmount);
     await page.locator('#widget_1_transfer_title').fill(transferTitle);
-    // await page.getByRole('button', { name: 'wykonaj' }).click();
     await page.locator('#execute_btn').click();
     await page.getByTestId('close-button').click();
 

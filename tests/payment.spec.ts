@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
 import { PaymentPage } from '../pages/payment.page';
+import { PulpitPage } from '../pages/pulpit.page';
+import { SideMenuComponent } from '../components/side-menu.component';
 
 test.describe('Payment tests', () => {
   // test.describe.configure({ retries: 3 }); //traktować jako ostateczność
@@ -10,13 +12,15 @@ test.describe('Payment tests', () => {
     const userId = loginData.userId;
     const userPassword = loginData.password;
     const loginPage = new LoginPage(page);
+    const pulpitPage = new PulpitPage(page);
+
 
     await page.goto('/');
     await loginPage.loginInput.fill(userId);
     await loginPage.passwordInput.fill(userPassword);
     await loginPage.loginButton.click();
     await page.waitForLoadState('domcontentloaded');
-    await page.getByRole('link', { name: 'płatności' }).click();
+    await pulpitPage.sideMenu.paymentButton.click();
   });
 
   test('Successful payment', async ({ page }) => {

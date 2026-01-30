@@ -6,19 +6,17 @@ import { PulpitPage } from '../pages/pulpit.page';
 import { SideMenuComponent } from '../components/side-menu.component';
 
 test.describe('Payment tests', () => {
-  // test.describe.configure({ retries: 3 }); //traktować jako ostateczność
+  let paymentPage: PaymentPage;
 
   test.beforeEach(async ({ page }) => {
     const userId = loginData.userId;
     const userPassword = loginData.password;
     const loginPage = new LoginPage(page);
     const pulpitPage = new PulpitPage(page);
-
+    paymentPage = new PaymentPage(page);
 
     await page.goto('/');
-    await loginPage.loginInput.fill(userId);
-    await loginPage.passwordInput.fill(userPassword);
-    await loginPage.loginButton.click();
+    await loginPage.login(userId, userPassword);
     await page.waitForLoadState('domcontentloaded');
     await pulpitPage.sideMenu.paymentButton.click();
   });
@@ -31,8 +29,6 @@ test.describe('Payment tests', () => {
     const expectedMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReciever}`;
 
     // Act
-    const paymentPage = new PaymentPage(page);
-
     await paymentPage.transferReceiver.fill(transferReciever);
     await paymentPage.transferAccount.fill(transferAccount);
     await paymentPage.transferAmount.fill(transferAmount);

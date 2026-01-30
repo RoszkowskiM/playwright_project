@@ -14,6 +14,7 @@ export class PulpitPage {
   topUpExecuteBtn: Locator;
   accountBalance: Locator;
   sideMenu: SideMenuComponent;
+  userName: Locator;
 
   constructor(private page: Page) {
     this.transferReceiver = this.page.locator('#widget_1_transfer_receiver');
@@ -32,5 +33,6 @@ export class PulpitPage {
     });
     this.accountBalance = this.page.locator('#money_value');
     this.sideMenu = new SideMenuComponent(this.page);
+    this.userName = this.page.getByTestId('user-name');
   }
 }

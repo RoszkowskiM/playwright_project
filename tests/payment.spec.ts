@@ -21,21 +21,25 @@ test.describe('Payment tests', () => {
     await pulpitPage.sideMenu.paymentButton.click();
   });
 
-  test('Successful payment @payment @integration', async ({ page }) => {
-    // Arrange
-    const transferReciever = 'Jan Nowak';
-    const transferAccount = '12 3456 7891 2345 6789 1234 5678';
-    const transferAmount = '222';
-    const expectedMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReciever}`;
+  test(
+    'Successful payment',
+    { tag: ['@payment', '@integration'] },
+    async ({ page }) => {
+      // Arrange
+      const transferReciever = 'Jan Nowak';
+      const transferAccount = '12 3456 7891 2345 6789 1234 5678';
+      const transferAmount = '222';
+      const expectedMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReciever}`;
 
-    // Act
-    await paymentPage.makeTransfer(
-      transferReciever,
-      transferAccount,
-      transferAmount,
-    );
+      // Act
+      await paymentPage.makeTransfer(
+        transferReciever,
+        transferAccount,
+        transferAmount,
+      );
 
-    // Assert
-    await expect(paymentPage.messageText).toHaveText(expectedMessage);
-  });
+      // Assert
+      await expect(paymentPage.messageText).toHaveText(expectedMessage);
+    },
+  );
 });

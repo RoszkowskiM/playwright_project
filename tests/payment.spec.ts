@@ -23,7 +23,13 @@ test.describe('Payment tests', () => {
 
   test(
     'Successful payment',
-    { tag: ['@payment', '@integration'] },
+    {
+      tag: ['@payment', '@integration'],
+      annotation: {
+        type: 'Documentation',
+        description: 'More to find at https://jaktestowac.pl/lesson/pw1s04l04/',
+      },
+    },
     async ({ page }) => {
       // Arrange
       const transferReciever = 'Jan Nowak';

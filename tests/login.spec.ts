@@ -20,11 +20,12 @@ test.describe('User login to Demobank', () => {
         description: 'Basic happy path test for login',
       },
     },
-    async ({ page }) => {
+    async ({ page }, testInfo) => {
       // Arrange
       const userId = loginData.userId;
       const userPassword = loginData.password;
       const expectedUserName = 'Jan Demobankowy';
+      const takeScreenshot = await page.screenshot({ fullPage: true });
 
       // Act
       await loginPage.login(userId, userPassword);
@@ -32,6 +33,10 @@ test.describe('User login to Demobank', () => {
       // Assert
       const pulpitPage = new PulpitPage(page);
       await expect(pulpitPage.userName).toHaveText(expectedUserName);
+      await testInfo.attach('home page', {
+        body: takeScreenshot,
+        contentType: 'image/png',
+      });
     },
   );
 

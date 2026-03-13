@@ -1,0 +1,6 @@
+{
+    "statusCodes": {
+        "success": 200,
+        "validationError": 707
+    }
+}

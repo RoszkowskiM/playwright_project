@@ -3,7 +3,6 @@ import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
 import { PaymentPage } from '../pages/payment.page';
 import { PulpitPage } from '../pages/pulpit.page';
-import { SideMenuComponent } from '../components/side-menu.component';
 
 test.describe('Payment tests', () => {
   let paymentPage: PaymentPage;

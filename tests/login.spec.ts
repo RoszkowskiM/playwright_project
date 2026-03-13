@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
 import { PulpitPage } from '../pages/pulpit.page';
+import TestData from '../test-data/test-data';
 
 test.describe('User login to Demobank', () => {
   let loginPage: LoginPage;
@@ -39,6 +40,39 @@ test.describe('User login to Demobank', () => {
       });
     },
   );
+
+  //same test as above, but a loop for 3 different users, using data from test-data.ts file
+  const successfulLoginTestData = TestData.loginTestData();
+  for (const loginInput of successfulLoginTestData) {
+    test(
+      `user "${loginInput.login}" successful login with correct credentials`,
+      {
+        tag: ['@login', '@smoke'],
+        annotation: {
+          type: 'Happy path',
+          description: 'Basic happy path test for login',
+        },
+      },
+      async ({ page }, testInfo) => {
+        // Arrange
+        const userId = loginInput.login;
+        const userPassword = loginInput.password;
+        const expectedUserName = 'Jan Demobankowy';
+        const takeScreenshot = await page.screenshot({ fullPage: true });
+
+        // Act
+        await loginPage.login(userId, userPassword);
+
+        // Assert
+        const pulpitPage = new PulpitPage(page);
+        await expect(pulpitPage.userName).toHaveText(expectedUserName);
+        await testInfo.attach('home page', {
+          body: takeScreenshot,
+          contentType: 'image/png',
+        });
+      },
+    );
+  }
 
   test(
     'unsuccessful login with too short username',

@@ -15,8 +15,8 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.57.0",
-    "@types/node": "^24.10.2",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^24.19.2",
     "prettier": "3.8.0"
   }
 }

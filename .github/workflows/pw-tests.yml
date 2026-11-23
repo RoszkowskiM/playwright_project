@@ -31,3 +31,8 @@ jobs:
         path: |
           playwright-report/**/*.*
           test-results/**/*.*
+     - name: Publish test report
+       uses: mikepenz/action-junit-report@v6
+       if: success() || failure() # always run even if the previous step fails
+       with:
+        report_paths: './playwright-report/results.xml'

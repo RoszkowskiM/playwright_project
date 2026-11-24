@@ -32,7 +32,7 @@ test.describe('Pulpit tests', () => {
       const recieverId = '2';
       const transferAmount = '150';
       const transferTitle = 'pizza';
-      const expectedTransferReciever = 'Chuck Demobankowy XYZ';
+      const expectedTransferReciever = 'Chuck Demobankowy';
       const expectedMessage = `Przelew wykonany! ${expectedTransferReciever} - ${transferAmount},00PLN - ${transferTitle}`;
 
       // Act
